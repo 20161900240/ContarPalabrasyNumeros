@@ -4,37 +4,30 @@
 
 int main(){
 	FILE * flujo = fopen("texto.txt", "r+");
-	int c,texto[1000],i=0,letras=0,numeros=0,letrasNumeros=0,f;
+	int c, bl=0,bn=0,bln=0,psn=0,n=0;
+	
 	
 
 	while((c = getc(flujo)) != EOF){
-		texto[i]=c;
-	i++;		
-	}
-	
-	for(f=0;f<i;f++){
-		if((texto[f]>=48 && texto[f]<=57)){
-			numeros++;
-		}		
-	}
-	
-	for(f=0;f<i;f++){
-		if(((texto[f]>=65 && texto[f]<=90) || (texto[f]>=97 && texto[f]<=122))){
-			letras++;
-		}
-	}
-	
-	for(f=0;f<i;f++){
-		printf("\n%c",texto[f]);
-		if(((texto[f]>=65 && texto[f]<=90) || (texto[f]>=97 && texto[f]<=122)) || (texto[f]>=48 && texto[f]<=57)){
-			letrasNumeros++;
+		if((c>=65 && c<=90) || (c>=97 && c<=122)){
+			bl=1;
+		}else if(c>=48 && c<=57){
+			bn=1;
 		}
 		
+		if(c==32 && bl==1){
+			psn++;
+		}
+		
+		if(c==32 && bn==1){
+			n++;
+		}
 	}
+	
 	fclose(flujo);
 	printf("\nSe a leido el archivo correctamente..");
-	printf("\n\nEl total de letras son: %i",letras);
-	printf("\n\nEl total de numeros son: %i",numeros);
-	printf("\n\nEl total letras y numeros son: %i",letrasNumeros);
+	printf("\n\nEl total de psn son: %i",psn);
+	printf("\n\nEl total de numeros son: %i",n);
+	//printf("\n\nEl total letras y numeros son: %i",letrasNumeros);
 	return 0;
 }
