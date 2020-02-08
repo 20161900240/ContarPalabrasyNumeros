@@ -10,20 +10,14 @@ Leer un archivo de texto caracter por caracter e identificar:
 int main(){
 
 	FILE * flujo = fopen("texto.txt", "r+");
-	int c;
-	int palabrassinnumeros=0;
-	int numeros=0;
-	int palabrasconnumeros=0;
-	int encontreletra=0;
-	int encontrenumero=0;
-	int finpalabra = 0;
+	int c, encontreletra=0,encontrenumero=0, finpalabra = 0, palabrassinnumeros=0, numeros=0, palabrasconnumeros=0;
 	
 
 	while((c = getc(flujo)) != EOF){
-		if(isalpha(c)){//isalpha es una funcion que devuelve true si el caracter evaluando es una letra
+		if(isalpha(c)){//isalpha(caracter) es una funcion que devuelve true si el caracter evaluando es una letra
 			encontreletra=1;
 			//printf("%c es letra \n",c);
-		}else if(isdigit(c)){//	isdigit es una funcion que devuelve true si el caracter evaluando es un digito		
+		}else if(isdigit(c)){//	isdigit(caracter) es una funcion que devuelve true si el caracter evaluando es un digito		
 			 encontrenumero=1;			
 			//printf("%c es numero \n",c);
 		}else{
@@ -41,17 +35,28 @@ int main(){
 				palabrasconnumeros++;// aumento de 1 en 1 el contador de palabras con numeros
 				//printf("sume palabras con numeros \n");
 			}
-			
+		// inicializando las banderas nuevamente
 		finpalabra=0;	
 		encontreletra=0;
 		encontrenumero=0;
 		}
 	}
-
+	/* verificando el ultimo estado de las banderas para validar la ultima palabra ya 
+	que en el ciclo while no la considera*/
+	if(encontreletra==0 && encontrenumero==1){
+		numeros++;// aumento de 1 en 1 el contador de numeros
+		//printf("sume numeros \n");
+	}else if(encontreletra==1 && encontrenumero==0){
+		palabrassinnumeros++;// aumento de 1 en 1 el contador de palabras sin numeros
+		//printf("sume palabras \n");
+	}else if(encontreletra==1 && encontrenumero==1){
+		palabrasconnumeros++;// aumento de 1 en 1 el contador de palabras con numeros
+		//printf("sume palabras y numeros \n");
+	}
 			
 	fclose(flujo);
 	printf("\nSe a leido el archivo correctamente..\n");
-	printf("\n\Se encontraron %i palabras sin numeros",palabrassinnumeros);
+	printf("\nSe encontraron %i palabras sin numeros",palabrassinnumeros);
 	printf("\nSe encontraron %i numeros",numeros);
 	printf("\nSe encontraron %i palabras con numeros",palabrasconnumeros);
 	return 0;
